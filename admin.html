@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Upload (Local Browser)</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        input, textarea, button { width: 100%; margin-top: 10px; padding: 8px; }
+        .item { border: 1px solid #ccc; padding: 10px; margin-top: 10px; }
+        button { cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<h2>Upload Form</h2>
+
+<form id="upload-form">
+    <input type="text" id="title" placeholder="Enter Title" required>
+    <textarea id="description" placeholder="Enter Description" required></textarea>
+    <button type="submit">Upload</button>
+</form>
+
+<h2>Saved Data</h2>
+<div id="data-list"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const form = document.getElementById("upload-form");
+    const list = document.getElementById("data-list");
+
+    // Load saved data on start
+    displayData();
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault(); // stop backend submit
+
+        const title = document.getElementById("title").value;
+        const description = document.getElementById("description").value;
+
+        const data = JSON.parse(localStorage.getItem("uploads")) || [];
+
+        data.push({
+            id: Date.now(),
+            title: title,
+            description: description
+        });
+
+        localStorage.setItem("uploads", JSON.stringify(data));
+
+        form.reset();
+        displayData();
+        alert("Saved in browser successfully!");
+    });
+
+    function displayData() {
+        list.innerHTML = "";
+        const data = JSON.parse(localStorage.getItem("uploads")) || [];
+
+        data.forEach(item => {
+            const div = document.createElement("div");
+            div.className = "item";
+            div.innerHTML = `
+                <h3>${item.title}</h3>
+                <p>${item.description}</p>
+                <button onclick="deleteItem(${item.id})">Delete</button>
+            `;
+            list.appendChild(div);
+        });
+    }
+
+    window.deleteItem = function(id) {
+        let data = JSON.parse(localStorage.getItem("uploads")) || [];
+        data = data.filter(item => item.id !== id);
+        localStorage.setItem("uploads", JSON.stringify(data));
+        displayData();
+    };
+
+});
+</script>
+
+</body>
+</html>

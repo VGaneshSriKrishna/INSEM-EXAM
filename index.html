@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Resource Library</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>📚 Educational Resource Library</h1>
+        <div class="header-links">
+            <a href="admin.html">Admin Dashboard</a>
+            <a href="login.html">Logout</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="controls">
+            <input type="text" id="search-input" placeholder="Search by title or description...">
+            
+            <select id="type-filter">
+                <option value="all">All Types</option>
+                <option value="Textbook">Textbook</option>
+                <option value="Research Paper">Research Paper</option>
+                <option value="Study Guide">Study Guide</option>
+            </select>
+        </section>
+
+        <section id="resource-container">
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
